@@ -328,44 +328,48 @@ public class DeepSeaFishWithUs extends LoopingScript {
     }
 
     public long handleBoosts() {
-        String[] boosts = { "Broken fishing rod", "Barrel of bait", "Message in a bottle", "Tangled fishbowl" };
-        if (Backpack.contains(boosts)) {
-            println("A deepsea boost was found, continuing.");
-            ResultSet<Item> buff = InventoryItemQuery.newQuery(93).name(boosts).option("Interact").results();
-            Execution.delay(rand.nextLong(600, 1100));
-            if (buff != null) {
-                for (Item item : buff) {
-                    println("Found item: " + item.getName());
-                    Backpack.interact(item.getName(), "Interact");
-                    if (item.getId() == 42282) {
-                        println("Is a message in a bottle: true");
-                        Execution.delayUntil(7000, () -> Interfaces.isOpen(1186));
-                        Execution.delay(rand.nextLong(650, 750));
-                        MiniMenu.interact(ComponentAction.DIALOGUE.getType(), 0, -1, 77725704);
-                        Execution.delayUntil(7000, () -> Interfaces.isOpen(751));
-                        switch (selectedBoost) {
-                            case INCREASE_CATCH_RATE:
-                                println("10% increase to catch rate");
-                                MiniMenu.interact(ComponentAction.DIALOGUE.getType(), 0, -1, 49217586);
-                                break;
-                            case ADDITIONAL_CATCH:
-                                println("10% change to gain an additional catch");
-                                MiniMenu.interact(ComponentAction.DIALOGUE.getType(), 0, -1, 49217594); //
-                                break;
-                            case ADDITIONAL_XP:
-                                println("5% XP increase");
-                                MiniMenu.interact(ComponentAction.DIALOGUE.getType(), 0, -1, 49217602); //
-                                break;
+        if (claimBoosts.get()) {
+            String[] boosts = { "Broken fishing rod", "Barrel of bait", "Message in a bottle", "Tangled fishbowl" };
+            if (Backpack.contains(boosts)) {
+                println("A deepsea boost was found, continuing.");
+                ResultSet<Item> buff = InventoryItemQuery.newQuery(93).name(boosts).option("Interact").results();
+                Execution.delay(rand.nextLong(600, 1100));
+                if (buff != null) {
+                    for (Item item : buff) {
+                        println("Found item: " + item.getName());
+                        Backpack.interact(item.getName(), "Interact");
+                        if (item.getId() == 42282) {
+                            println("Is a message in a bottle: true");
+                            Execution.delayUntil(7000, () -> Interfaces.isOpen(1186));
+                            Execution.delay(rand.nextLong(650, 750));
+                            MiniMenu.interact(ComponentAction.DIALOGUE.getType(), 0, -1, 77725704);
+                            Execution.delayUntil(7000, () -> Interfaces.isOpen(751));
+                            switch (selectedBoost) {
+                                case INCREASE_CATCH_RATE:
+                                    println("10% increase to catch rate");
+                                    MiniMenu.interact(ComponentAction.DIALOGUE.getType(), 0, -1, 49217586);
+                                    break;
+                                case ADDITIONAL_CATCH:
+                                    println("10% change to gain an additional catch");
+                                    MiniMenu.interact(ComponentAction.DIALOGUE.getType(), 0, -1, 49217594); //
+                                    break;
+                                case ADDITIONAL_XP:
+                                    println("5% XP increase");
+                                    MiniMenu.interact(ComponentAction.DIALOGUE.getType(), 0, -1, 49217602); //
+                                    break;
+                            }
+                        } else {
+                            Execution.delayUntil(7000, () -> Interfaces.isOpen(847));
+                            MiniMenu.interact(ComponentAction.DIALOGUE.getType(), 0, -1, 55509014);
+                            Execution.delayUntil(7000, () -> !Interfaces.isOpen(847));
                         }
-                    } else {
-                        Execution.delayUntil(7000, () -> Interfaces.isOpen(847));
-                        MiniMenu.interact(ComponentAction.DIALOGUE.getType(), 0, -1, 55509014);
-                        Execution.delayUntil(7000, () -> !Interfaces.isOpen(847));
                     }
+                    Execution.delay(rand.nextLong(2100, 2600));
                 }
-                Execution.delay(rand.nextLong(2100, 2600));
-            }
-            return rand.nextLong(1800, 2250);
+                return rand.nextLong(1800, 2250);
+            } else {
+                return rand.nextLong(100, 250);
+            }    
         } else {
             return rand.nextLong(100, 250);
         }
