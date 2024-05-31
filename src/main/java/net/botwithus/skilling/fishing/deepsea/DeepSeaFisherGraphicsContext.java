@@ -5,6 +5,7 @@ import net.botwithus.rs3.imgui.ImGui;
 import net.botwithus.rs3.imgui.ImGuiWindowFlag;
 import net.botwithus.rs3.script.ScriptConsole;
 import net.botwithus.rs3.script.ScriptGraphicsContext;
+import net.botwithus.skilling.fishing.deepsea.enums.DeepSeaBoost;
 import net.botwithus.skilling.fishing.deepsea.enums.DeepSeaFisherBotState;
 import net.botwithus.skilling.fishing.deepsea.enums.FishingActivity;
 import net.botwithus.skilling.fishing.deepsea.enums.Jellyfish;
@@ -35,6 +36,14 @@ public class DeepSeaFisherGraphicsContext extends ScriptGraphicsContext {
                     }
                     ImGui.SameLine();
                     deepSeaFishWithUs.debugMode.set(ImGui.Checkbox("Debug mode", deepSeaFishWithUs.debugMode.get()));
+                    handleConfigChange();
+                    ImGui.SameLine();
+                    deepSeaFishWithUs.claimBoosts.set(ImGui.Checkbox("Interact with deepsea boosts", deepSeaFishWithUs.claimBoosts.get()));
+                    handleConfigChange();
+                    if (deepSeaFishWithUs.claimBoosts.get()) {
+                        ImGui.Combo("Message in a bottle option", deepSeaFishWithUs.boostActivity, DeepSeaBoost.toStringArray());
+                        deepSeaFishWithUs.selectedBoost = DeepSeaBoost.values()[deepSeaFishWithUs.boostActivity.get()];
+                    }
                     handleConfigChange();
                     ImGui.Combo("Fishing activity", deepSeaFishWithUs.fishingActivity, FishingActivity.toStringArray());
                     deepSeaFishWithUs.selectedActivity = FishingActivity.values()[deepSeaFishWithUs.fishingActivity.get()];
