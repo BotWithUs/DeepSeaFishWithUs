@@ -121,6 +121,7 @@ public class DeepSeaFishWithUs extends LoopingScript {
     }
 
     public int handleFishing(Player player) {
+        Execution.delay(handleBoosts());
         return switch (selectedActivity) {
             case MINNOW -> handleCatchingMinnow(player);
             case MAGICAL -> handleCatchingMagical(player);
@@ -132,7 +133,6 @@ public class DeepSeaFishWithUs extends LoopingScript {
     }
 
     public int handleCatchingMinnow(Player player) {
-        Execution.delay(handleBoosts());
         if (player.isMoving() || player.getAnimationId() != -1)
             animationDeadCount = 0;
         if (player.getAnimationId() == -1 && animationDeadCount > 2) {
@@ -188,7 +188,6 @@ public class DeepSeaFishWithUs extends LoopingScript {
     }
 
     public int handleCatchingMagical(Player player) {
-        Execution.delay(handleBoosts());
         if (player.isMoving() || player.getAnimationId() != -1)
             animationDeadCount = 0;
         if (player.getAnimationId() == -1 && animationDeadCount > 2) {
@@ -235,7 +234,6 @@ public class DeepSeaFishWithUs extends LoopingScript {
     }
 
     public int handleCatchingSwarm(Player player) {
-        Execution.delay(handleBoosts());
         if (player.isMoving() || player.getAnimationId() != -1)
             animationDeadCount = 0;
         if (player.getAnimationId() == -1 && animationDeadCount > 2) {
@@ -257,7 +255,6 @@ public class DeepSeaFishWithUs extends LoopingScript {
     }
 
     public int handleCatchingJellyfish(Player player) {
-        Execution.delay(handleBoosts());
         if (player.isMoving() || player.getAnimationId() != -1)
             animationDeadCount = 0;
         if (player.getAnimationId() == -1 && animationDeadCount > 2) {
@@ -279,7 +276,6 @@ public class DeepSeaFishWithUs extends LoopingScript {
     }
 
     public int handleCatchingFrenzy(Player player) {
-        Execution.delay(handleBoosts());
         if (player.isMoving())
             return rand.nextInt(1432, 2453);
         if (rand.nextInt(200) == 0)
@@ -294,7 +290,6 @@ public class DeepSeaFishWithUs extends LoopingScript {
     }
 
     public int handleCatchingSailfish(Player player) {
-        Execution.delay(handleBoosts());
         if (player.isMoving() || player.getAnimationId() != -1)
             animationDeadCount = 0;
         if (player.getAnimationId() == -1 && animationDeadCount > 2) {
